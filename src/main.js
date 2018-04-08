@@ -5,7 +5,8 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import App from './App'
 import router from './router'
-require('./mock.js')
+import mock from './mock'
+import 'font-awesome/css/font-awesome.css'
 
 Vue.use(ElementUI)
 Vue.config.productionTip = false
