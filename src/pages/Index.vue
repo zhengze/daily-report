@@ -4,10 +4,17 @@
       <el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
         {{collapsed?'':sysName}}
       </el-col>
-      <el-col :span="10">
+      <el-col :span="1">
         <div class="tools" @click.prevent="collapse">
           <i class="fa fa-align-justify"></i>
         </div>
+      </el-col>
+      <el-col :span="9">
+        <el-menu :default-active="activeIndex" class="el-menu-header" mode="horizontal" text-color="#000"
+          active-text-color="#ffd04b" @select="handleselect">
+          <el-menu-item index="1">我的日报</el-menu-item>
+          <el-menu-item index="2">下属日报</el-menu-item>
+        </el-menu>
       </el-col>
       <el-col :span="4" class="userinfo">
         <el-dropdown trigger="hover">
@@ -15,7 +22,8 @@
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>我的消息</el-dropdown-item>
             <el-dropdown-item>设置</el-dropdown-item>
-            <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
+            <el-dropdown-item>个人资料</el-dropdown-item>
+            <el-dropdown-item divided @click.native="logout">退出</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-col>
@@ -79,7 +87,7 @@ export default {
       collapsed: false,
       sysUserName: '',
       sysUserAvatar: '',
-      activeIndex: 1,
+      activeIndex: '1',
       form: {
         name: '',
         region: '',
@@ -193,6 +201,9 @@ export default {
         height: 60px;
         line-height: 60px;
         cursor: pointer;
+      }
+      .el-menu-header{
+        background-color: #20a0ff;
       }
     }
     .main {
