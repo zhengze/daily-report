@@ -13,7 +13,12 @@ export default new Router({
     {
       path: '/',
       name: 'Index',
-      component: r => require(['@/pages/Index'], r)
-    }
+      component: r => require(['@/pages/Index'], r),
+    },
+    {
+      path: '/myreport',
+      name: 'MyReport',
+      component: r => require(['@/pages/MyReport'], r),
+    },
   ]
 })

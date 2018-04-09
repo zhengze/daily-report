@@ -1,33 +1,6 @@
 <template>
   <el-row class="container">
-    <el-col :span="24" class="header">
-      <el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
-        {{collapsed?'':sysName}}
-      </el-col>
-      <el-col :span="1">
-        <div class="tools" @click.prevent="collapse">
-          <i class="fa fa-align-justify"></i>
-        </div>
-      </el-col>
-      <el-col :span="9">
-        <el-menu :default-active="activeIndex" class="el-menu-header" mode="horizontal" text-color="#000"
-          active-text-color="#ffd04b" @select="handleselect">
-          <el-menu-item index="1">我的日报</el-menu-item>
-          <el-menu-item index="2">下属日报</el-menu-item>
-        </el-menu>
-      </el-col>
-      <el-col :span="4" class="userinfo">
-        <el-dropdown trigger="hover">
-          <span class="el-dropdown-link userinfo-inner"><img src="../assets/user.png" /> {{sysUserName}}</span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>我的消息</el-dropdown-item>
-            <el-dropdown-item>设置</el-dropdown-item>
-            <el-dropdown-item>个人资料</el-dropdown-item>
-            <el-dropdown-item divided @click.native="logout">退出</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </el-col>
-    </el-col>
+    <header></header>
     <el-col :span="24" class="main">
       <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
         <!--导航菜单-->
@@ -80,68 +53,10 @@
 </template>
 
 <script>
+import header from '../components/header'
 export default {
-  data () {
-    return {
-      sysName: 'DailyReport',
-      collapsed: false,
-      sysUserName: '',
-      sysUserAvatar: '',
-      activeIndex: '1',
-      form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
-      }
-    }
-  },
-  methods: {
-    onSubmit () {
-      console.log('submit!')
-    },
-    handleopen () {
-      // console.log('handleopen');
-    },
-    handleclose () {
-      // console.log('handleclose');
-    },
-    handleselect: function (a, b) {
-    },
-    // 退出登录
-    logout: function () {
-      var _this = this
-      this.$confirm('确认退出吗?', '提示', {
-        // type: 'warning'
-      }).then(() => {
-        sessionStorage.removeItem('user')
-        _this.$router.push('/login')
-      }).catch(() => {
-
-      })
-    },
-    // 折叠导航栏
-    collapse: function () {
-      this.collapsed = !this.collapsed
-    },
-    showMenu (i, status) {
-      this.$refs.menuCollapsed.getElementsByClassName('submenu-hook-' + i)[0].style.display = status ? 'block' : 'none'
-    }
-  },
-  mounted () {
-    var user = sessionStorage.getItem('user')
-    if (user) {
-      user = JSON.parse(user)
-      this.sysUserName = user.name || ''
-      this.sysUserAvatar = user.avatar || 'user'
-    }
-  }
+  ...header
 }
-
 </script>
 
 <style scoped lang="scss">
@@ -150,62 +65,6 @@ export default {
     top: 0px;
     bottom: 0px;
     width: 100%;
-    .header {
-      height: 60px;
-      line-height: 60px;
-      background: #20a0ff;
-      color:#fff;
-      .userinfo {
-        text-align: right;
-        padding-right: 35px;
-        float: right;
-        .userinfo-inner {
-          cursor: pointer;
-          color:#fff;
-          img {
-            width: 40px;
-            height: 40px;
-            border-radius: 20px;
-            margin: 10px 0px 10px 10px;
-            float: right;
-          }
-        }
-      }
-      .logo {
-        //width:230px;
-        height:60px;
-        font-size: 22px;
-        padding-left:20px;
-        padding-right:20px;
-        border-color: rgba(238,241,146,0.3);
-        border-right-width: 1px;
-        border-right-style: solid;
-        img {
-          width: 40px;
-          float: left;
-          margin: 10px 10px 10px 18px;
-        }
-        .txt {
-          color:#fff;
-        }
-      }
-      .logo-width{
-        width:230px;
-      }
-      .logo-collapse-width{
-        width:60px
-      }
-      .tools{
-        padding: 0px 23px;
-        width:14px;
-        height: 60px;
-        line-height: 60px;
-        cursor: pointer;
-      }
-      .el-menu-header{
-        background-color: #20a0ff;
-      }
-    }
     .main {
       display: flex;
       // background: #324057;
