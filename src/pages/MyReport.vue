@@ -4,18 +4,20 @@
   <el-main>
     <ul>
       <li v-for="(item, index) in reports" :key="index">
-      <p>{{item.created_time}}</p>
-      <p>{{item.content}}</p>
+      <p class="report-create-time"><h3>{{item.created_time}}</h3></p>
+      <p><code>{{item.content}}</code></p>
     <hr/>
     </li>
     </ul>
-    <div class="block">
+    <el-row>
+    <el-col :span="24" class="toolbar">
       <el-pagination
         layout="prev, pager, next"
         :total="50"
       >
       </el-pagination>
-    </div>
+    </el-col>
+    </el-row>
   </el-main>
   </el-row>
 </template>
@@ -34,8 +36,9 @@ export default {
   },
   methods: {
     getMyReports: function () {
+      let user = JSON.parse(sessionStorage.getItem('user'))
       let para = JSON.stringify({
-        uid: sessionStorage.getItem('user').id
+        uid: user.id
       })
       getMyReportList(para).then((res) => {
         this.reports = res.data.myreports
@@ -44,7 +47,6 @@ export default {
   },
   mounted () {
     this.getMyReports()
-    this.sysUserName = JSON.parse(sessionStorage.getItem('user')).username
   }
 }
 </script>
@@ -62,6 +64,9 @@ export default {
       overflow: hidden;
       padding-left: 30px;
       padding-right: 30px;
+      ul {
+        text-align: left;
+      }
     }
   }
 </style>
