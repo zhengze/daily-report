@@ -58,7 +58,8 @@ export default {
   data () {
     return {
       collapsed: false,
-      activeIndex: '1'
+      activeIndex: '1',
+      sysUserName: ''
     }
   },
   components: {

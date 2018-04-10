@@ -17,7 +17,7 @@
       </el-col>
       <el-col :span="4" class="userinfo">
         <el-dropdown trigger="hover">
-          <span class="el-dropdown-link userinfo-inner"><img src="../assets/user.png" /> {{sysUserName}}</span>
+          <span class="el-dropdown-link userinfo-inner"><img src="../assets/user.png" />{{sysUserName}}</span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>我的消息</el-dropdown-item>
             <el-dropdown-item>设置</el-dropdown-item>
@@ -38,7 +38,9 @@ export default {
       sysUserAvatar: ''
     }
   },
-  props: ['activeIndex'],
+  props: [
+    'activeIndex'
+  ],
   methods: {
     onSubmit () {
       console.log('submit!')
@@ -65,7 +67,7 @@ export default {
     }
   },
   mounted () {
-    var user = sessionStorage.getItem('user')
+    let user = JSON.parse(sessionStorage.getItem('user'))
     if (user) {
       this.sysUserName = user.username || ''
     }

@@ -17,7 +17,6 @@ mock.onPost('/login').reply(config => {
           return true
         }
       })
-
       if (hasUser) {
         resolve([200, { code: 200, msg: '请求成功', user }])
       } else {
@@ -28,7 +27,7 @@ mock.onPost('/login').reply(config => {
 })
 
 mock.onGet('/myreport/list').reply(config => {
-  let {uid} = config.params
+  let {uid} = JSON.parse(config.params)
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve([200, {myreports: MyReports}])

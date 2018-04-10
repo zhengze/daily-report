@@ -34,9 +34,9 @@ export default {
   },
   methods: {
     getMyReports: function () {
-      let para = {
+      let para = JSON.stringify({
         uid: sessionStorage.getItem('user').id
-      }
+      })
       getMyReportList(para).then((res) => {
         this.reports = res.data.myreports
       })
@@ -44,6 +44,7 @@ export default {
   },
   mounted () {
     this.getMyReports()
+    this.sysUserName = JSON.parse(sessionStorage.getItem('user')).username
   }
 }
 </script>
