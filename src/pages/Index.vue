@@ -1,6 +1,6 @@
 <template>
   <el-row class="container">
-    <header></header>
+    <headerComponent :activeIndex="activeIndex"></headerComponent>
     <el-col :span="24" class="main">
       <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
         <!--导航菜单-->
@@ -53,9 +53,27 @@
 </template>
 
 <script>
-import header from '../components/header'
+import headerComponent from '../components/header'
 export default {
-  ...header
+  data () {
+    return {
+      collapsed: false,
+      activeIndex: '1'
+    }
+  },
+  components: {
+    headerComponent
+  },
+  methods: {
+    handleopen () {
+      // console.log('handleopen')
+    },
+    handleclose () {
+      // console.log('handleclose')
+    },
+    handleselect () {
+    }
+  }
 }
 </script>
 

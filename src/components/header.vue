@@ -30,39 +30,23 @@
 </template>
 <script>
 export default {
-  name: 'header',
   data () {
     return {
       sysName: 'DailyReport',
       collapsed: false,
       sysUserName: '',
-      sysUserAvatar: '',
-      activeIndex: '1',
-      form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
+      sysUserAvatar: ''
     }
-  };
+  },
+  props: ['activeIndex'],
   methods: {
-    onSubmit (); {
+    onSubmit () {
       console.log('submit!')
-    };
-    handleopen (); {
-      // console.log('handleopen')
-    };
-    handleclose (); {
-      // console.log('handleclose')
-    };
-    handleselect: (a, b); {
-    };
+    },
+    handleselect () {
+    },
     // 退出登录
-    logout: () {
+    logout () {
       var _this = this
       this.$confirm('确认退出吗?', '提示', {
         // type: 'warning'
@@ -79,9 +63,14 @@ export default {
     showMenu (i, status) {
       this.$refs.menuCollapsed.getElementsByClassName('submenu-hook-' + i)[0].style.display = status ? 'block' : 'none'
     }
-  } 
-
-} 
+  },
+  mounted () {
+    var user = sessionStorage.getItem('user')
+    if (user) {
+      this.sysUserName = user.username || ''
+    }
+  }
+}
 </script>
 <style scoped lang="scss">
     .header {
@@ -141,4 +130,3 @@ export default {
       }
     }
 </style>
-
