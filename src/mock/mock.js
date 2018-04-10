@@ -5,6 +5,15 @@ import {LoginUsers, Users} from './data/User.js'
 import { MyReports } from './data/Report.js'
 
 var mock = new MockAdapter(axios)
+
+mock.onGet('/success').reply(200, {
+  msg: 'success'
+})
+
+mock.onGet('/error').reply(500, {
+  msg: 'error'
+})
+
 mock.onPost('/login').reply(config => {
   let {username, password} = JSON.parse(config.data)
   return new Promise((resolve, reject) => {
