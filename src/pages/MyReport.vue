@@ -2,13 +2,16 @@
   <el-row class="container">
     <headerComponent :activeIndex="activeIndex"></headerComponent>
   <el-main>
-    <ul>
-      <li v-for="(item, index) in reports" :key="index">
-      <p class="report-create-time"><h3>{{item.created_time}}</h3></p>
-      <p><code>{{item.content}}</code></p>
-    <hr/>
-    </li>
-    </ul>
+    <el-row v-for="(item, index) in reports" :key="index">
+      <el-card class="box-card">
+        <div slot="header">
+          {{item.created_time}}
+        </div>
+        <div>
+          <code>{{item.content}}</code>
+        </div>
+      </el-card>
+    </el-row>
     <el-row>
     <el-col :span="24" class="toolbar">
       <el-pagination
@@ -64,8 +67,11 @@ export default {
       overflow: hidden;
       padding-left: 30px;
       padding-right: 30px;
-      ul {
-        text-align: left;
+      .el-row {
+        .box-card {
+          text-align: left;
+          width: 480px;
+        }
       }
     }
   }

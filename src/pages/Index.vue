@@ -1,6 +1,10 @@
 <template>
   <el-row class="container">
-    <headerComponent :activeIndex="activeIndex"></headerComponent>
+    <headerComponent
+      :activeIndex="activeIndex"
+      @nav-collapsed="onNavCollapsed"
+    >
+    </headerComponent>
     <el-col :span="24" class="main">
       <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
         <!--导航菜单-->
@@ -15,7 +19,7 @@
           </template>
         </el-menu>
         <!--导航菜单-折叠后-->
-        <ul class="el-menu el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
+        <ul class="el-menu el-menu-vertical-demo collapsed" collapsed="!collapsed" ref="menuCollapsed">
           <li v-for="(item,index) in $router.options.routes" :key="index" v-if="!item.hidden" class="el-submenu item">
             <template v-if="!item.leaf">
               <div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)"><i :class="item.iconCls"></i></div>
@@ -73,6 +77,9 @@ export default {
       // console.log('handleclose')
     },
     handleselect () {
+    },
+    onNavCollapsed (collapsed) {
+      this.collapsed = collapsed
     }
   }
 }

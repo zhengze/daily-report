@@ -1,10 +1,10 @@
 <template>
     <el-col :span="24" class="header">
-      <el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
+      <el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'" >
         {{collapsed?'':sysName}}
       </el-col>
       <el-col :span="1">
-        <div class="tools" @click.prevent="collapse">
+        <div class="tools" @click.prevent="collapse" @click='handleCollapsed(collapsed)'>
           <i class="fa fa-align-justify"></i>
         </div>
       </el-col>
@@ -42,6 +42,9 @@ export default {
     'activeIndex'
   ],
   methods: {
+    handleCollapsed () {
+      this.$emit('nav-collapsed', this.collapsed)
+    },
     onSubmit () {
       console.log('submit!')
     },
