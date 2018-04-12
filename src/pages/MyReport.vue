@@ -2,23 +2,21 @@
   <el-row class="container">
     <headerComponent :activeIndex="activeIndex"></headerComponent>
   <el-main>
-    <el-row v-for="(item, index) in reports" :key="index">
-      <el-card class="box-card">
-        <div slot="header">
-          {{item.created_time}}
-        </div>
-        <div>
-          <code>{{item.content}}</code>
-        </div>
-      </el-card>
-    </el-row>
     <el-row>
     <el-col :span="24" class="toolbar">
+      <div class="myreport" v-for="(item, index) in reports" :key="index">
+        <p><i class="fa fa-calendar-times-o"></i>{{item.created_time}}</p>
+        <code>{{item.content}}</code>
+        <hr/>
+      </div>
+      <div class="block">
       <el-pagination
-        layout="prev, pager, next"
-        :total="50"
+        layout="total, sizes, prev, pager, next, jumper"
+        :page-size="10"
+        :total="reports.length"
       >
       </el-pagination>
+      </div>
     </el-col>
     </el-row>
   </el-main>
@@ -56,21 +54,23 @@ export default {
 <style scoped lang="scss">
   .container {
     position: absolute;
+    overflow: auto;
     top: 0px;
     bottom: 0px;
     width: 100%;
     .el-main {
-      display: flex;
-      position: absolute;
       top: 60px;
       bottom: 0px;
-      overflow: hidden;
-      padding-left: 30px;
-      padding-right: 30px;
       .el-row {
-        .box-card {
+        height: 500px;
+        padding-left: 200px;
+        padding-right: 200px;
+        .myreport {
           text-align: left;
-          width: 480px;
+          margin-bottom: 20px;
+        }
+        .block {
+          float: right;
         }
       }
     }
