@@ -8,29 +8,23 @@
     <el-col :span="24" class="main">
       <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
         <!--导航菜单-->
-        <el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect"
-           unique-opened router :collapse="collapsed">
-          <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
-            <el-submenu :index="index+''" :key="index" v-if="!item.leaf">
-              <template slot="title"><i :class="item.iconCls"></i>{{item.name}}</template>
-              <el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" v-if="!child.hidden">{{child.name}}</el-menu-item>
+        <el-menu :default-active="'1'" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect"
+           unique-opened router :collapse="collapsed" v-if="!collapsed">
+          <template v-for="(item,index) in organization">
+            <el-submenu :index="index+''" :key="index">
+              <template slot="title"><i class="fa fa-bars"></i>{{item.department}}</template>
+              <el-menu-item v-for="(child, index) in item.member" :index="index+''" :key="child.id">{{child.cname}}</el-menu-item>
             </el-submenu>
-            <el-menu-item v-if="item.leaf&&item.children.length>0" :key="item" :index="item.children[0].path"><i :class="item.iconCls"></i>{{item.children[0].name}}</el-menu-item>
           </template>
         </el-menu>
         <!--导航菜单-折叠后-->
-        <ul class="el-menu el-menu-vertical-demo collapsed" collapsed="!collapsed" ref="menuCollapsed">
-          <li v-for="(item,index) in $router.options.routes" :key="index" v-if="!item.hidden" class="el-submenu item">
-            <template v-if="!item.leaf">
-              <div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)"><i :class="item.iconCls"></i></div>
+        <ul class="el-menu el-menu-vertical-demo collapsed" collapsed="!collapsed" ref="menuCollapsed" v-if="collapsed">
+          <li v-for="(item,index) in organization" :index="index+''" :key="item.id" class="el-submenu item">
+            <template>
+              <div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)"><i class="fa fa-bars"></i></div>
               <ul class="el-menu submenu" :class="'submenu-hook-'+index" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
-                <li v-for="child in item.children" v-if="!child.hidden" :key="child.path" class="el-menu-item" style="padding-left: 40px;" :class="$route.path==child.path?'is-active':''" @click="$router.push(child.path)">{{child.name}}</li>
+                <li v-for="(child, index) in item.member" :index="index+''" :key="child" class="el-menu-item" style="padding-left: 40px;" @click="$router.push(child.path)">{{child.name}}</li>
               </ul>
-            </template>
-            <template v-else>
-              <li class="el-submenu">
-                <div class="el-submenu__title el-menu-item" style="padding-left: 20px;height: 56px;line-height: 56px;padding: 0 20px;" :class="$route.path==item.children[0].path?'is-active':''" @click="$router.push(item.children[0].path)"><i :class="item.iconCls"></i></div>
-              </li>
             </template>
           </li>
         </ul>
@@ -58,12 +52,14 @@
 
 <script>
 import headerComponent from '../components/header'
+import { getOrganization } from '../api/api'
 export default {
   data () {
     return {
       collapsed: false,
       activeIndex: '1',
-      sysUserName: ''
+      sysUserName: '',
+      organization: []
     }
   },
   components: {
@@ -80,7 +76,15 @@ export default {
     },
     onNavCollapsed (collapsed) {
       this.collapsed = collapsed
+    },
+    getOrganization () {
+      getOrganization().then((res) => {
+        this.organization = res.data.organization.data
+      })
     }
+  },
+  mounted () {
+    this.getOrganization()
   }
 }
 </script>
@@ -104,6 +108,7 @@ export default {
         // position: absolute;
         // top: 0px;
         // bottom: 0px;
+        overflow: auto;
         .el-menu{
           height: 100%;
         }
