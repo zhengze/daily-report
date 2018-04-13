@@ -2,18 +2,24 @@
   <el-row class="container">
     <headerComponent :activeIndex="activeIndex"></headerComponent>
   <el-main>
+      <el-row class="write-report">
+        <a href="#"><el-button type="primary">写日报</el-button></a>
+      </el-row>
     <el-row>
     <el-col :span="24" class="toolbar">
-      <div class="myreport" v-for="(item, index) in reports" :key="index">
+      <div class="myreport" v-for="(item, index) in reports.data" :key="index">
         <p><i class="fa fa-calendar-times-o"></i>{{item.created_time}}</p>
         <code>{{item.content}}</code>
         <hr/>
       </div>
-      <div class="block">
+      <div>
       <el-pagination
+        class="pull-right clearfix"
         layout="total, sizes, prev, pager, next, jumper"
-        :page-size="10"
-        :total="reports.length"
+        :page-size="reports.pageSize"
+        :total="reports.count"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
       >
       </el-pagination>
       </div>
@@ -29,7 +35,9 @@ export default {
   data () {
     return {
       reports: [],
-      activeIndex: '2'
+      activeIndex: '2',
+      currentPage: 1,
+      pageSize: 10
     }
   },
   components: {
@@ -39,15 +47,35 @@ export default {
     getMyReports: function () {
       let user = JSON.parse(sessionStorage.getItem('user'))
       let para = JSON.stringify({
-        uid: user.id
+        uid: user.id,
+        currentPage: this.currentPage,
+        pageSize: this.pageSize
       })
       getMyReportList(para).then((res) => {
-        this.reports = res.data.myreports
+        this.reports = res.data.myreports_list
       })
+    },
+    handleCurrentChange (currentPage) {
+      this.currentPage = currentPage
+    },
+    handleSizeChange (pageSize) {
+      this.pageSize = pageSize
     }
   },
   mounted () {
     this.getMyReports()
+  },
+  watch: {
+    currentPage: {
+      handler () {
+        this.getMyReports()
+      }
+    },
+    pageSize: {
+      handler () {
+        this.getMyReports()
+      }
+    }
   }
 }
 </script>
@@ -69,9 +97,10 @@ export default {
           text-align: left;
           margin-bottom: 20px;
         }
-        .block {
-          float: right;
-        }
+      }
+      .write-report {
+        float: left;
+        height: 100%;
       }
     }
   }
