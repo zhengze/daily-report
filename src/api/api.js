@@ -16,9 +16,11 @@ export const editUser = params => { return axios.get(`${base}/user/edit`, { para
 
 export const addUser = params => { return axios.get(`${base}/user/add`, { params: params }) }
 export const getMyReportList = params => { return axios.get(`${base}/myreport/list`, { params: params }) }
+export const getOrganization = () => { return axios.get(`${base}/organization`) }
 
 export default {
   requestLogin,
   getUserList,
-  getMyReportList
+  getMyReportList,
+  getOrganization
 }
