@@ -12,4 +12,17 @@ const MyReportsListModel = Mock.mock({
   'data': [],
   'hasNext': true
 })
-export { MyReports, MyReportsListModel }
+
+const UserReports = Mock.mock({
+  'data|30': [{
+    content: '@cparagraph(1, 3)',
+    created_time: '@DATETIME("yyyy-MM-dd HH:mm:ss")'
+  }]
+})
+
+const UserReportsListModel = Mock.mock({
+  'count': UserReports.data.length,
+  'data': [],
+  'hasNext': true
+})
+export { MyReports, MyReportsListModel, UserReports, UserReportsListModel }

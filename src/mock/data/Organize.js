@@ -5,7 +5,7 @@ const Organization = Mock.mock({
     'department': '@ctitle',
     'id|+10': 1,
     'member|5': [{
-      'id+1': 1,
+      'id': '@id',
       'username': '@name',
       'cname': '@cname'
     }]

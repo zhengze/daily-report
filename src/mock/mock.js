@@ -2,7 +2,7 @@ import Mock from 'mockjs'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import {LoginUsers, Users} from './data/User.js'
-import { MyReports, MyReportsListModel } from './data/Report.js'
+import { MyReports, MyReportsListModel, UserReports, UserReportsListModel } from './data/Report.js'
 import { Organization } from './data/Organize.js'
 
 var mock = new MockAdapter(axios)
@@ -49,6 +49,23 @@ mock.onGet('/myreport/list').reply(config => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve([200, {myreports_list: myreports_list}])
+    }, 1000)
+  })
+})
+
+mock.onGet('/report/list').reply(config => {
+  let {uid, currentPage, pageSize} = JSON.parse(config.params)
+  let reportsList = UserReportsListModel
+  let pageNum = Math.ceil((UserReports.data.length) / pageSize)
+  reportsList.hasNext = true ? currentPage < pageNum : false
+  if (reportsList.hasNext) {
+    reportsList.data = UserReports.data.slice((currentPage - 1) * pageSize, (currentPage) * pageSize)
+  } else {
+    reportsList.data = UserReports.data.slice((currentPage - 1) * pageSize)
+  }
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve([200, {reportsList: reportsList}])
     }, 1000)
   })
 })

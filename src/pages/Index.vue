@@ -9,11 +9,13 @@
       <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
         <!--导航菜单-->
         <el-menu :default-active="'1'" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect"
-           unique-opened router :collapse="collapsed" v-if="!collapsed">
+           unique-opened :collapse="collapsed" v-if="!collapsed">
           <template v-for="(item,index) in organization">
-            <el-submenu :index="index+''" :key="index">
+            <el-submenu :index="index+''" :key="item.id">
               <template slot="title"><i class="fa fa-bars"></i>{{item.department}}</template>
-              <el-menu-item v-for="(child, index) in item.member" :index="index+''" :key="child.id">{{child.cname}}</el-menu-item>
+              <el-menu-item v-for="(child, index) in item.member" :index="index+''" :key="child.id">
+                <router-link :to="{name: 'UserReport', params:{userId: child.id}}">{{child.cname}}</router-link>
+              </el-menu-item>
             </el-submenu>
           </template>
         </el-menu>
@@ -23,7 +25,7 @@
             <template>
               <div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)"><i class="fa fa-bars"></i></div>
               <ul class="el-menu submenu" :class="'submenu-hook-'+index" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
-                <li v-for="(child, index) in item.member" :index="index+''" :key="child" class="el-menu-item" style="padding-left: 40px;" @click="$router.push(child.path)">{{child.name}}</li>
+                <li v-for="(child, index) in item.member" :index="index+''" :key="child" class="el-menu-item" style="padding-left: 40px;" @click="$router.push({ name: 'reports', params: { userId: child.id }})">{{child.cname}}</li>
               </ul>
             </template>
           </li>
@@ -32,7 +34,7 @@
       <section class="content-container">
         <div class="grid-content bg-purple-light">
           <el-col :span="24" class="breadcrumb-container">
-            <strong class="title">{{$route.name}}</strong>
+            <strong class="title">{{$route.params.id}}</strong>
             <el-breadcrumb separator="/" class="breadcrumb-inner">
               <el-breadcrumb-item v-for="item in $route.matched" :key="item.path">
                 {{ item.name }}
