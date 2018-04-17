@@ -4,6 +4,11 @@ const LoginUsers = [
   {
     'id': 1,
     'username': 'admin',
+    'password': '123456',
+  },
+  {
+    'id': 2,
+    'username': 'zhengze',
     'password': '123456'
   }
 ]
