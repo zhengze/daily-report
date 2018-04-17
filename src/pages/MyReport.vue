@@ -6,8 +6,8 @@
         <a href="#"><el-button type="primary">写日报</el-button></a>
       </el-row>
     <el-row>
-    <el-col :span="24" class="toolbar">
-      <div class="myreport" v-for="(item, index) in reports.data" :key="index">
+    <el-col :span="24" class="toolbar" v-loading="loading">
+      <div class="myreport" v-for="(item, index) in reports.data" :key="index"> 
         <p><i class="fa fa-calendar-times-o"></i>{{item.created_time}}</p>
         <code>{{item.content}}</code>
         <hr/>
@@ -37,7 +37,8 @@ export default {
       reports: [],
       activeIndex: '2',
       currentPage: 1,
-      pageSize: 10
+      pageSize: 10,
+      loading: true
     }
   },
   components: {
@@ -53,6 +54,7 @@ export default {
       })
       getMyReportList(para).then((res) => {
         this.reports = res.data.myreports_list
+        this.loading = false;
       })
     },
     handleCurrentChange (currentPage) {
@@ -82,10 +84,8 @@ export default {
 <style scoped lang="scss">
   .container {
     position: absolute;
-    overflow: auto;
     top: 0px;
     bottom: 0px;
-    width: 100%;
     .el-main {
       top: 60px;
       bottom: 0px;
