@@ -12,7 +12,7 @@
         <el-menu :default-active="activeIndex" class="el-menu-header" mode="horizontal" text-color="#000"
           active-text-color="#ffd04b" @select="handleselect">
           <el-menu-item index="1"><router-link :to="{name: 'Index'}" tag="li">首页</router-link></el-menu-item>
-          <el-menu-item index="2"><router-link :to="{name: 'MyReport'}" tag="li">我的日报</router-link></el-menu-item>
+          <el-menu-item index="2" class="myreport-menu" v-if="!myReportHidden"><router-link :to="{name: 'MyReport'}" tag="li">我的日报</router-link></el-menu-item>
         </el-menu>
       </el-col>
       <el-col :span="4" class="userinfo">
@@ -35,7 +35,8 @@ export default {
       sysName: 'DailyReport',
       collapsed: false,
       sysUserName: '',
-      sysUserAvatar: ''
+      sysUserAvatar: '',
+      myReportHidden: false
     }
   },
   props: [
@@ -64,15 +65,14 @@ export default {
     // 折叠导航栏
     collapse: function () {
       this.collapsed = !this.collapsed
-    },
-    showMenu (i, status) {
-      this.$refs.menuCollapsed.getElementsByClassName('submenu-hook-' + i)[0].style.display = status ? 'block' : 'none'
     }
   },
   mounted () {
     let user = JSON.parse(sessionStorage.getItem('user'))
-    if (user) {
-      this.sysUserName = user.username || ''
+    if(user){
+      this.sysUserName = user.username
+      const isAdmin = user.username === 'admin'?true:false
+      this.myReportHidden = isAdmin==true ?true:false
     }
   }
 }
