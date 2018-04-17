@@ -9,7 +9,7 @@
       <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
         <!--导航菜单-->
         <el-menu :default-active="'1'" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect"
-           unique-opened :collapse="collapsed" v-if="!collapsed">
+           unique-opened :collapse="collapsed">
           <template v-for="(item,index) in organization">
             <el-submenu :index="index+''" :key="item.id">
               <template slot="title"><i class="fa fa-bars"></i>{{item.department}}</template>
@@ -19,17 +19,6 @@
             </el-submenu>
           </template>
         </el-menu>
-        <!--导航菜单-折叠后-->
-        <ul class="el-menu el-menu-vertical-demo collapsed" collapsed="!collapsed" ref="menuCollapsed" v-if="collapsed">
-          <li v-for="(item,index) in organization" :index="index+''" :key="item.id" class="el-submenu item">
-            <template>
-              <div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)"><i class="fa fa-bars"></i></div>
-              <ul class="el-menu submenu" :class="'submenu-hook-'+index" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
-                <li v-for="(child, index) in item.member" :index="index+''" :key="child" class="el-menu-item" style="padding-left: 40px;" @click="$router.push({ name: 'reports', params: { userId: child.id }})">{{child.cname}}</li>
-              </ul>
-            </template>
-          </li>
-        </ul>
       </aside>
       <section class="content-container">
         <div class="grid-content bg-purple-light">
