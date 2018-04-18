@@ -2,6 +2,16 @@
   <el-row class="container">
   <el-main>
     <el-row>
+    <el-col :span="24" class="breadcrumb-container">
+      <strong class="title"></strong>
+      <!--
+      <el-breadcrumb separator="/" class="breadcrumb-inner">
+        <el-breadcrumb-item v-for="item in $route.matched" :key="item.path">
+          {{ item.name }}
+        </el-breadcrumb-item>
+      </el-breadcrumb>
+      -->
+    </el-col>
     <el-col :span="24" class="toolbar" v-loading="loading">
       <p>{{$route.query.cname}}
       <div class="myreport" v-for="(item, index) in reports.data" :key="index">
