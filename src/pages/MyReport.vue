@@ -7,7 +7,7 @@
       </el-row>
     <el-row>
     <el-col :span="24" class="toolbar" v-loading="loading">
-      <div class="myreport" v-for="(item, index) in reports.data" :key="index"> 
+      <div class="myreport" v-for="(item, index) in reports.data" :key="index">
         <p><i class="fa fa-calendar-times-o"></i>{{item.created_time}}</p>
         <code>{{item.content}}</code>
         <hr/>
@@ -54,7 +54,7 @@ export default {
       })
       getMyReportList(para).then((res) => {
         this.reports = res.data.myreports_list
-        this.loading = false;
+        this.loading = false
       })
     },
     handleCurrentChange (currentPage) {
