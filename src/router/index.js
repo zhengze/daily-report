@@ -26,6 +26,11 @@ export default new Router({
       path: '/myreport',
       name: 'MyReport',
       component: r => require(['@/pages/MyReport'], r)
+    },
+    {
+      path: '/writereport',
+      name: 'WriteReport',
+      component: r => require(['@/pages/WriteReport'], r)
     }
   ]
 })

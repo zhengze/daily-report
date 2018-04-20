@@ -13,6 +13,7 @@
           active-text-color="#ffd04b" @select="handleselect">
           <el-menu-item index="1"><router-link :to="{name: 'Index'}" tag="li">首页</router-link></el-menu-item>
           <el-menu-item index="2" class="myreport-menu" v-if="!myReportHidden"><router-link :to="{name: 'MyReport'}" tag="li">我的日报</router-link></el-menu-item>
+          <el-menu-item index="3" class="myreport-menu" v-if="!myReportHidden"><router-link :to="{name: 'WriteReport'}" tag="li">写日报</router-link></el-menu-item>
         </el-menu>
       </el-col>
       <el-col :span="4" class="userinfo">
@@ -69,10 +70,10 @@ export default {
   },
   mounted () {
     let user = JSON.parse(sessionStorage.getItem('user'))
-    if(user){
+    if (user) {
       this.sysUserName = user.username
-      const isAdmin = user.username === 'admin'?true:false
-      this.myReportHidden = isAdmin==true ?true:false
+      let isAdmin = user.username === 'admin'
+      this.myReportHidden = isAdmin === true
     }
   }
 }
