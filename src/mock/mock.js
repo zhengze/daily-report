@@ -40,7 +40,7 @@ mock.onGet('/myreport/list').reply(config => {
   let {uid, currentPage, pageSize} = JSON.parse(config.params)
   let myreports_list = MyReportsListModel
   let pageNum = Math.ceil((MyReports.data.length) / pageSize)
-  myreports_list.hasNext = true ? currentPage < pageNum : false
+  myreports_list.hasNext = currentPage < pageNum
   if (myreports_list.hasNext) {
     myreports_list.data = MyReports.data.slice((currentPage - 1) * pageSize, (currentPage) * pageSize)
   } else {
@@ -57,7 +57,7 @@ mock.onGet('/report/list').reply(config => {
   let {uid, currentPage, pageSize} = JSON.parse(config.params)
   let reportsList = UserReportsListModel
   let pageNum = Math.ceil((UserReports.data.length) / pageSize)
-  reportsList.hasNext = true ? currentPage < pageNum : false
+  reportsList.hasNext = currentPage < pageNum
   if (reportsList.hasNext) {
     reportsList.data = UserReports.data.slice((currentPage - 1) * pageSize, (currentPage) * pageSize)
   } else {
