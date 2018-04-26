@@ -6,9 +6,9 @@
     <el-col :span="24" class="toolbar">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item>
-		  <el-button type="primary">提交</el-button>
-		  <el-button>重置</el-button>
-		</el-form-item>
+          <el-button type="primary">提交</el-button>
+          <el-button>重置</el-button>
+        </el-form-item>
         <el-form-item>
         <quill-editor ref="myTextEditor"
               v-model="content"
@@ -17,7 +17,7 @@
               @focus="onEditorFocus($event)"
               @ready="onEditorReady($event)">
         </quill-editor>
-		</el-form-item>
+        </el-form-item>
       </el-form>
     </el-col>
     </el-row>
@@ -30,7 +30,7 @@ export default {
   data () {
     return {
       activeIndex: '3',
- 	  ruleForm: {},
+      ruleForm: {},
       rules: {},
       content: '日报',
       editorOption: {
@@ -53,19 +53,19 @@ export default {
     resetForm (formName) {
       this.$refs[formName].resetFields()
     },
-    onEditorBlur(editor){
+    onEditorBlur (editor) {
     },
-    onEditorFocus(editor){
+    onEditorFocus (editor) {
     },
-    onEditorReady(editor){
+    onEditorReady (editor) {
     },
-    onEditorChange(editor){
+    onEditorChange (editor) {
     }
   },
   mounted () {
   },
   computed: {
-    editor() {
+    editor () {
       return this.$refs.myTextEditor.quillEditor
     }
   },
